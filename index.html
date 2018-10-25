@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="css/mainCss.css">
+  <meta charset="utf-8">
+  <title>Wikipedia's top of the day</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  <script src="javascript/utilities.js"></script>
+  <script src="javascript/articles.js"></script>
+  <script src="javascript/UI.js"></script>
+  <script src="javascript/Wiki.js"></script>
+  <script src="javascript/saves.js"></script>
+  <script src="javascript/createChart.js"></script>
+</head>
+
+<body>
+  <h1 id="header">WikiChart</h1>
+  <div id="visit">
+  </div>
+  <div id="noscript">
+    <noscript>You currently do not have javascript turned on so many of the features of this website will be disabeld.
+          To change this, please go to your browser settings to turn javascript back on</noscript>
+  </div>
+  <article id="container">
+    <nav id="headers">
+      <a id="topArticles" href="#tab1">Top Articles</a>
+      <a id="saved" href="#tab2">Saved</a>
+      <a id="charts" href="#tab3">Charts</a>
+      <a id="aboutUs" href="#tab4">About us</a>
+    </nav>
+    <article id="content">
+      <div id="tab1">
+        <h2 class="tabHeader">Articles</h2>
+        <div id="oldInternet"></div>
+        <article id="settings">
+          <form id="form">
+            <label id="dateLabel">Date : </label>
+            <input type="date" name="date" id="date" required/>
+            <label id="articlesLabel">Number of Articles : </label>
+            <select id="articlesNumber">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                      </select>
+            <label id="languageLabel">Language : </label>
+            <select id="language">
+                        <option value="English">English</option>
+                        <option value="French">French</option>
+                      </select>
+            <button id="save" type="button">Save</button>
+            <input type="submit" id="submit" value="Submit" />
+            <button id="reset" type="button">Reset</button>
+            <p id="instructions"><span></span>Select a date between July 2015 and yesterday (July 2015 was the year wikipedia started making its data public and yesterday because they will not release the current day's data until the day ends). Chose the number of articles
+              you would like to be displayed. Select a language. You may save your settings by clicking "save". You may reset your settings by clicking "reset". To start the search click on "submit". Be wary as if you click reset you must enter a new
+              valid date. If you decide not to save, the default settings will be used (Language: English, Number of Articles: 10, Date: yesterday)</p>
+            <button id="tutorial">Hide</button>
+          </form>
+          <table id="table">
+            <tr id="0">
+              <th>Saved</th>
+              <th>Title</th>
+              <th>Summary</th>
+              <th>Thumbnail</th>
+              <th>Views</th>
+            </tr>
+            <tr id="1">
+              <td>
+                <img src="./imgs/emptyStar.png"  alt="Empty Star" class="checkbox" id="checkbox0" >
+              </td>
+              <td>
+                <a class="title" id="title0"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc0"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img0" class="img">
+              </td>
+              <td>
+                <p class="view" id="view0"> </p>
+              </td>
+            </tr>
+            <tr id="2">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox1">
+              </td>
+              <td>
+                <a class="title" id="title1"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc1"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img1" class="img">
+              </td>
+              <td>
+                <p class="view" id="view1"> </p>
+              </td>
+            </tr>
+            <tr id="3">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox2">
+              </td>
+              <td>
+                <a class="title" id="title2"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc2"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img2" class="img">
+              </td>
+              <td>
+                <p class="view" id="view2"> </p>
+              </td>
+            </tr>
+            <tr id="4">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox3">
+              </td>
+              <td>
+                <a class="title" id="title3"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc3"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img3" class="img">
+              </td>
+              <td>
+                <p class="view" id="view3"> </p>
+              </td>
+            </tr>
+            <tr id="5">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox4">
+              </td>
+              <td>
+                <a class="title" id="title4"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc4"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img4" class="img">
+              </td>
+              <td>
+                <p class="view" id="view4"> </p>
+              </td>
+            </tr>
+            <tr id="6">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox5">
+              </td>
+              <td>
+                <a class="title" id="title5"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc5"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img5" class="img">
+              </td>
+              <td>
+                <p class="view" id="view5"> </p>
+              </td>
+            </tr>
+            <tr id="7">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox6">
+              </td>
+              <td>
+                <a class="title" id="title6"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc6"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img6" class="img">
+              </td>
+              <td>
+                <p class="view" id="view6"> </p>
+              </td>
+            </tr>
+            <tr id="8">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox7">
+              </td>
+              <td>
+                <a class="title" id="title7"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc7"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img7" class="img">
+              </td>
+              <td>
+                <p class="view" id="view7"> </p>
+              </td>
+            </tr>
+            <tr id="9">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox8">
+              </td>
+              <td>
+                <a class="title" id="title8"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc8"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img8" class="img">
+              </td>
+              <td>
+                <p class="view" id="view8"> </p>
+              </td>
+            </tr>
+            <tr id="10">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox9">
+              </td>
+              <td>
+                <a class="title" id="title9"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc9"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img9" class="img">
+              </td>
+              <td>
+                <p class="view" id="view9"> </p>
+              </td>
+            </tr>
+            <tr id="11">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox10">
+              </td>
+              <td>
+                <a class="title" id="title10"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc10"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img10" class="img">
+              </td>
+              <td>
+                <p class="view" id="view10"> </p>
+              </td>
+            </tr>
+            <tr id="12">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox11">
+              </td>
+              <td>
+                <a class="title" id="title11"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc11"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img11" class="img">
+              </td>
+              <td>
+                <p class="view" id="view11"> </p>
+              </td>
+            </tr>
+            <tr id="13">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox12">
+              </td>
+              <td>
+                <a class="title" id="title12"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc12"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img12" class="img">
+              </td>
+              <td>
+                <p class="view" id="view12"> </p>
+              </td>
+            </tr>
+            <tr id="14">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox13">
+              </td>
+              <td>
+                <a class="title" id="title13"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc13"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img13" class="img">
+              </td>
+              <td>
+                <p class="view" id="view13"> </p>
+              </td>
+            </tr>
+            <tr id="15">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox14">
+              </td>
+              <td>
+                <a id="title14"> </p>
+              </td>
+              <td>
+                <p class="summary" id="desc14"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img14" class="img">
+              </td>
+              <td>
+                <p class="view" id="view14"> </p>
+              </td>
+            </tr>
+            <tr id="16">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox15">
+              </td>
+              <td>
+                <a class="title" id="title15"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc15"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img15" class="img">
+              </td>
+              <td>
+                <p class="view" id="view15"> </p>
+              </td>
+            </tr>
+            <tr id="17">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox16">
+              </td>
+              <td>
+                <a class="title" id="title16"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc16"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img16" class="img">
+              </td>
+              <td>
+                <p class="view" id="view16"> </p>
+              </td>
+            </tr>
+            <tr id="18">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox17">
+              </td>
+              <td>
+                <a class="title" id="title17"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc17"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img17" class="img">
+              </td>
+              <td>
+                <p class="view" id="view17"> </p>
+              </td>
+            </tr>
+            <tr id="19">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox18">
+              </td>
+              <td>
+                <a class="title" id="title18"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc18"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img18" class="img">
+              </td>
+              <td>
+                <p class="view" id="view18"> </p>
+              </td>
+            </tr>
+            <tr id="20">
+              <td>
+              <img src="./imgs/emptyStar.png"  alt="Empty Star"  class="checkbox" id="checkbox19">
+              </td>
+              <td>
+                <a class="title" id="title19"> </a>
+              </td>
+              <td>
+                <p class="summary" id="desc19"> </p>
+              </td>
+              <td>
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="img19" class="img">
+              </td>
+              <td>
+                <p class="view" id="view19"> </p>
+              </td>
+            </tr>
+          </table>
+        </article>
+      </div>
+      <div id="tab2">
+        <h2 class="tabHeader">Saved</h2>
+        <div id="empty">
+          <p>This page is used to show all your saved pages. You may save a page by clicking on the star next to its title in the "Top Articles" tab. This message will disappear once an article has been saved.</p>
+        </div>
+        <table id="savedTable">
+          <tr>
+            <th>Saved</th>
+            <th>Title</th>
+            <th>Summary</th>
+          </tr>
+        </table>
+      </div>
+      <div id="tab3">
+        <h2 class="tabHeader">Chart</h2>
+        <article id="chartSettings">
+          <label id="viewsTextLabel">Title of Article : </label>
+          <input type="text" name="chartText" id="chartText" required/>
+          <label id="languageLabelViews">Language : </label>
+          <select id="languageViews">
+                      <option value="English">English</option>
+                      <option value="French">French</option>
+                    </select>
+          <button id="submitChart">submit</button>
+          <span></span>
+          <div id="canvasContainer">
+            <canvas id="canvas">
+              </canvas>
+          </div>
+          <p id = "invalidSearch">The item you have looked for does not exist in the Wikipedia database. Please try entering something else</p>
+        </article>
+      </div>
+      <div id="tab4">
+        <h2 class="tabHeader">About us</h2>
+        <p>I am a student at the Dawson College in Montreal and this is one of my school projects in my javascript class. Using the wikipedia API, I am able to show you the most visited cites of a certain date, along with pictures and descriptions if available</p>
+      </div>
+    </article>
+  </article>
+  <div id="topContainer">
+    <a href="#header" id="top">Top</a>
+  </div>
+  <footer>
+    <p>Dawson College © 2018 </p>
+  </footer>
+</body>
+
+</html>
